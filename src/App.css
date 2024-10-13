@@ -1,38 +1,132 @@
-.App {
+/*Style untuk Halaman Home*/
+body{
+  font-family: Arial, sans-serif;
+  background-image: url("C:\Users\Xperience\bukutamu-frontend\public\images\12240162_4910834.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+h1{
+  color: #EE6983;
   text-align: center;
+  max-width: 400px;
+  margin-bottom: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+form{
+  background-color: #FFC4C4;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+input,textarea{
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #850E35; 
+  border-radius: 5px;
+}
+
+.submit-btn{
+  background-color: #850E35; 
   color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.submit-btn:hover{
+  background-color: #EE6983; 
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/*Style untuk Halaman Daftar Tamu*/
+.guest-list{
+  margin-top: 20px;
+  padding: 20px;
+  background-image: url("C:\Users\Xperience\bukutamu-frontend\public\images\12240162_4910834.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  color: #850E35;
+}
+
+.guest-list ul{
+  list-style-type: none;
+  padding: 0;
+}
+
+.guest-list li{
+  background-color: #FFF5E4E6; 
+  padding: 10px;
+  border: 1px solid #850E35; 
+  border-radius: 5px;
+  margin-bottom: 10px;
+  color: #EE6983;
+}
+
+.guest-list h2{
+  color: #EE6983;
+}
+
+.back-btn{
+  background-color: #FFC4C4; 
+  color: #850E35; 
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px; 
+  margin-top: 20px; 
+}
+
+.back-btn:hover{
+  background-color: #FFF5E4;
+}
+
+/*Style untuk Tombol Edit */
+.edit-btn {
+  background-color: #EE6983; 
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.edit-btn:hover {
+  background-color: #FFC4C4; 
+}
+
+/*Style untuk Tombol Delete */
+.delete-btn {
+  background-color: #850E35; 
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #EE6983; 
 }
