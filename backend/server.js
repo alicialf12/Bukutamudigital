@@ -1,9 +1,11 @@
 const express = require('express');
 const mysql = require('mysql2');
+const cors = require('cors')
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5001;
 
 app.use(express.json());
+app.use(cors());
 
 const db = mysql.createConnection({
     host: 'localhost', 
@@ -20,13 +22,10 @@ db.connect((err) => {
     console.log('Connected');
 });
 
-app.get('/', (req, res)=>{
+// Route untuk tes koneksi server
+app.get('/', (req, res) => {
     res.send('API Buku Tamu Berjalan');
 });
-
-app.listen(PORT, ()=>{
-    console.log(`Server berjalan di http://localhost:${PORT}`);
-})
 
 // Endpoint untuk menambah tamu
 app.post('/api/tamu', (req, res) => {
@@ -38,9 +37,9 @@ app.post('/api/tamu', (req, res) => {
       }
       res.json({ message: 'Tamu berhasil ditambahkan', id: result.insertId });
     });
-  });
+});
 
-  // Endpoint untuk mendapatkan daftar tamu
+// Endpoint untuk mendapatkan daftar tamu
 app.get('/api/tamu', (req, res) => {
     const sql = 'SELECT * FROM tamu';
     db.query(sql, (err, results) => {
@@ -49,9 +48,9 @@ app.get('/api/tamu', (req, res) => {
       }
       res.json(results);
     });
-  });
+});
 
- // Endpoint untuk mengedit tamu
+// Endpoint untuk mengedit tamu
 app.put('/api/tamu/:id', (req, res) => {
     const { nama, keterangan, pesan } = req.body;
     const { id } = req.params;
@@ -62,9 +61,9 @@ app.put('/api/tamu/:id', (req, res) => {
       }
       res.json({ message: 'Tamu berhasil diperbarui' });
     });
-  });
+});
 
-  // Endpoint untuk menghapus tamu
+// Endpoint untuk menghapus tamu
 app.delete('/api/tamu/:id', (req, res) => {
     const { id } = req.params;
     const sql = 'DELETE FROM tamu WHERE id = ?';
@@ -74,5 +73,9 @@ app.delete('/api/tamu/:id', (req, res) => {
       }
       res.json({ message: 'Tamu berhasil dihapus' });
     });
-  });
-  
+});
+
+
+app.listen(PORT, () => {
+    console.log(`Server berjalan di http://localhost:${PORT}`);
+});

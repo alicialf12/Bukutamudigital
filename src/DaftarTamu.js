@@ -14,8 +14,8 @@ function DaftarTamu({ guests, handleEdit, handleDelete }) {
               <strong>{guest.nama}</strong> - {guest.keterangan} <br />
               {guest.pesan}
               <br />
-              <button className='edit-btn' onClick={() => handleEdit(index)}>Edit</button>
-              <button className='delete-btn' onClick={() => handleDelete(index)}>Delete</button>
+              <button className='edit-btn' onClick={() => handleEdit(guest.id)}>Edit</button>
+              <button className='delete-btn' onClick={() => handleDelete(guest.id)}>Delete</button>
             </li>
           ))
         ) : (

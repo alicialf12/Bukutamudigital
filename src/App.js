@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./Home";  
@@ -7,9 +7,31 @@ import DaftarTamu from "./DaftarTamu";
 function App() {
   const [guests, setGuests] = useState([]); 
   const [editIndex, setEditIndex] = useState(null); 
-  const [editData, setEditData] = useState(null); 
+  const [editData, setEditData] = useState(null);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // Mengambil daftar tamu dari backend
+  const getDaftarTamu = async () =>{
+    try{
+      const response = await fetch('http://localhost:5001/api/tamu',{
+        method:'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setGuests(data);
+    } catch (error){
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    getDaftarTamu();
+  }, []);
+
+  // Fungsi untuk submit tamu baru atau edit tamu yang ada
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const tamuBaru = {
       nama: e.target.nama.value,
@@ -17,40 +39,54 @@ function App() {
       pesan: e.target.pesan.value
     };
 
-    if (editIndex !== null) {
-      
-      const updatedGuests = guests.map((guest, index) => 
-        index === editIndex ? tamuBaru : guest
-      );
-      setGuests(updatedGuests);
-      setEditIndex(null); 
-    } else {
-      
-      setGuests([...guests, tamuBaru]);
+    try {
+      if (editIndex !== null) {
+        await fetch(`http://localhost:5001/api/tamu/${editIndex}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(tamuBaru),
+        });
+        setEditIndex(null); 
+      } else {
+        await fetch('http://localhost:5001/api/tamu', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(tamuBaru),
+        });
+      }
+    } catch (error) {
+      console.error('Error saving data:', error);
     }
 
+    getDaftarTamu(); 
     e.target.reset();
     setEditData(null); 
-
-    navigate('/daftar-tamu');
+    navigate('/daftar-tamu'); 
   };
 
+  // Fungsi untuk menghapus tamu
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`http://localhost:5001/api/tamu/${id}`, {
+        method: 'DELETE',
+      });
+      getDaftarTamu(); 
+    } catch (error) {
+      console.error('Error deleting data:', error);
+    }
+  };
 
-  
-  const handleEdit = (index) => {
-    const tamu = guests[index];
-    setEditIndex(index); 
+  // Fungsi untuk mengedit tamu
+  const handleEdit = (id) => {
+    const tamu = guests.find((guest) => guest.id === id); 
+    setEditIndex(id); 
     setEditData(tamu); 
     navigate("/"); 
   };
-
-  
-  const handleDelete = (index) => {
-    const updatedGuests = guests.filter((_, i) => i !== index);
-    setGuests(updatedGuests); 
-  };
-
-  const navigate = useNavigate();
 
   return (
     <Routes>
